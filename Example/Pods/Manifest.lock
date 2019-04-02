@@ -1,0 +1,16 @@
+PODS:
+  - FeedbackSDK (0.1.0)
+
+DEPENDENCIES:
+  - FeedbackSDK (from `../`)
+
+EXTERNAL SOURCES:
+  FeedbackSDK:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  FeedbackSDK: d597d87305802ba4048b28e451bd157223ee0bbe
+
+PODFILE CHECKSUM: f46f3995abec33c085aadfc1429a3c3cf8459f4f
+
+COCOAPODS: 1.7.0.beta.3

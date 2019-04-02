@@ -1,0 +1,6 @@
+framework module FeedbackSDK {
+  umbrella header "FeedbackSDK-umbrella.h"
+
+  export *
+  module * { export * }
+}
