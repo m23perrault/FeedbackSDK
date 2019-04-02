@@ -6,6 +6,5 @@ target 'FeedbackSDK_Example' do
   target 'FeedbackSDK_Tests' do
     inherit! :search_paths
 
-    
   end
 end
