@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'FeedbackSDK_Example' do
+  pod 'FeedbackSDK', :path => '../'
+
+  target 'FeedbackSDK_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
