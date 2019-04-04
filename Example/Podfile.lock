@@ -1,15 +1,26 @@
 PODS:
-  - FeedbackSDK (0.1.1)
+  - Alamofire (4.8.2)
+  - AlamofireImage (3.5.2):
+    - Alamofire (~> 4.8)
+  - FeedbackSDK (0.1.2):
+    - AlamofireImage (~> 3.5)
 
 DEPENDENCIES:
   - FeedbackSDK (from `../`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - AlamofireImage
 
 EXTERNAL SOURCES:
   FeedbackSDK:
     :path: "../"
 
 SPEC CHECKSUMS:
-  FeedbackSDK: cd213424ae3b75bd484dea9581b9b83bed73328c
+  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
+  AlamofireImage: 63cfe3baf1370be6c498149687cf6db3e3b00999
+  FeedbackSDK: 35db7b8689b141c49bfad8b3ffca9b89f7d5ea1b
 
 PODFILE CHECKSUM: c7877877ffddfffae6bfc9fb09d0cce54d4c252e
 

@@ -1,9 +1,9 @@
 {
   "name": "FeedbackSDK",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "summary": "A short description of FeedbackSDK.",
   "description": "TODO: Add long description of the pod here.",
-  "homepage": "https://github.com/m23perrault/FeedbackSDK",
+  "homepage": "https://github.com/m23perrault/FeedbackSDK.git",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
@@ -12,11 +12,23 @@
     "aravindkumar": "anshapp89@gmail.com"
   },
   "source": {
-    "git": "https://github.com/m23perrault/FeedbackSDK",
-    "tag": "0.1.1"
+    "git": "https://github.com/m23perrault/FeedbackSDK.git",
+    "tag": "0.1.2"
   },
   "platforms": {
     "ios": "8.0"
   },
-  "source_files": "FeedbackSDK/Classes/**/*"
+  "source_files": "FeedbackSDK/Classes/**/*",
+  "frameworks": "AVFoundation",
+  "public_header_files": [
+    "FeedbackSDK/Classes/*.h",
+    "AVFoundation",
+    "Foundation",
+    "UIKit"
+  ],
+  "dependencies": {
+    "AlamofireImage": [
+      "~> 3.5"
+    ]
+  }
 }
