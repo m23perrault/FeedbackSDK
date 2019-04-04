@@ -29,6 +29,16 @@
   "dependencies": {
     "AlamofireImage": [
       "~> 3.5"
+    ],
+    "GrowingTextView": [
+      "0.6.1"
     ]
+  },
+  "ios": {
+    "resource_bundles": {
+      "FeedbackSDKResources": [
+        "FeedbackSDK/FeedbackSDKResources/*"
+      ]
+    }
   }
 }

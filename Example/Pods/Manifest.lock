@@ -4,6 +4,8 @@ PODS:
     - Alamofire (~> 4.8)
   - FeedbackSDK (0.1.2):
     - AlamofireImage (~> 3.5)
+    - GrowingTextView (= 0.6.1)
+  - GrowingTextView (0.6.1)
 
 DEPENDENCIES:
   - FeedbackSDK (from `../`)
@@ -12,6 +14,7 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - AlamofireImage
+    - GrowingTextView
 
 EXTERNAL SOURCES:
   FeedbackSDK:
@@ -20,7 +23,8 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
   AlamofireImage: 63cfe3baf1370be6c498149687cf6db3e3b00999
-  FeedbackSDK: 35db7b8689b141c49bfad8b3ffca9b89f7d5ea1b
+  FeedbackSDK: 1fe1af4faab01421a51f1b034bb537aaa17af57f
+  GrowingTextView: 335aefa45df7df06b01edede1363414d6ee5d6bc
 
 PODFILE CHECKSUM: c7877877ffddfffae6bfc9fb09d0cce54d4c252e
 

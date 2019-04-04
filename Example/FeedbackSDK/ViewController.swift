@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FeedbackSDK
 
 class ViewController: UIViewController {
 
@@ -21,5 +22,9 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    @IBAction func feedbackAction(_ sender: Any)
+    {
+        FeedbackSDKManager.sdkInstance.showFeedbackViewController()
+    }
 }
 

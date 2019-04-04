@@ -34,9 +34,9 @@ TODO: Add long description of the pod here.
    s.public_header_files = 'FeedbackSDK/Classes/*.h',
    s.frameworks = "AVFoundation","Foundation","UIKit"
    s.dependency 'AlamofireImage', '~> 3.5'
-
-  # s.resource_bundles = {
-  #   'FeedbackSDK' => ['FeedbackSDK/Assets/*.png']
-  # }
+s.dependency 'GrowingTextView', '0.6.1'
+   s.ios.resource_bundle = {
+    'FeedbackSDKResources' => ['FeedbackSDK/FeedbackSDKResources/*']
+  }
 
 end

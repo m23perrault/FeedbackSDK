@@ -28,12 +28,33 @@ public class FeedbackSDKManager
         else
         {
         self.sdk_app_id = SDK_APP_ID;
-        self.sdk_app_id = SDK_APP_SECRET_KEY;
+        self.sdk_secret_key = SDK_APP_SECRET_KEY;
 
         print(SDK_APP_ID);
         print(SDK_APP_SECRET_KEY);
     }
 
+    }
+    public func showFeedbackViewController()
+    {
+        print(self.sdk_app_id);
+
+        print("aravind kumar")
+        if #available(iOS 9.0, *) {
+      
+        var resourcesBundle : Bundle? = nil;
+       let containingBundle = Bundle(for: FeedbackSDKViewController.self)
+        let resourcesBundleURL =  containingBundle.url(forResource: "FeedbackSDKResources", withExtension: "bundle");
+        if let bb  : URL = resourcesBundleURL
+        {
+            resourcesBundle =  Bundle(url: bb)
+        }
+        
+        let viewCOntroller  = FeedbackSDKViewController(nibName: "FeedbackSDKViewController", bundle: resourcesBundle)
+        
+        UIApplication.shared.keyWindow?.rootViewController?.present(viewCOntroller, animated: true, completion: nil)
+
+        }
     }
 
 }
