@@ -9,7 +9,11 @@ import UIKit
 import GrowingTextView
 
 @available(iOS 9.0, *)
-class FeedbackSDKViewController: UIViewController {
+class FeedbackSDKViewController: UIViewController
+{
+    
+    var dataArray  =  NSMutableArray()
+    @IBOutlet weak var tbView: UITableView!
     private var textView: GrowingTextView!
     private var textViewBottomConstraint: NSLayoutConstraint!
     private var inputToolbar: UIView!
@@ -18,16 +22,19 @@ class FeedbackSDKViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.addInformationOverView()
+        
+        // Do any additional setup after loading the view.
+    }
+    func addInformationOverView()
+    {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(_:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
-
         
         self.addTextView()
-
-        // Do any additional setup after loading the view.
-        self.getImagePath()
-    }
-    func getImagePath()
-    {
+        self.tbView.dataSource = self;
+        self.tbView.delegate = self;
+        
         var resourcesBundle : Bundle? = nil;
         let containingBundle = Bundle(for: FeedbackSDKViewController.self)
         let resourcesBundleURL =  containingBundle.url(forResource: "FeedbackSDKResources", withExtension: "bundle");
@@ -36,15 +43,14 @@ class FeedbackSDKViewController: UIViewController {
             resourcesBundle =  Bundle(url: bb)
         }
         
-        
-        let closeImage : UIImage =  UIImage(named: "closeBlue", in: resourcesBundle, compatibleWith: nil)! ;
+         self.tbView.register(InfoTableViewCell.self, forCellReuseIdentifier: "info")
+        let closeImage : UIImage =  UIImage(named: "close_black", in: resourcesBundle, compatibleWith: nil)!
         self.closeBt.setImage(closeImage, for: .normal)
-        print(closeImage);
-        let send_button : UIImage =  UIImage(named: "send_button", in: resourcesBundle, compatibleWith: nil)! ;
+        let send_button : UIImage =  UIImage(named: "send_button", in: resourcesBundle, compatibleWith: nil)!
         self.sendBtn.setImage(send_button, for: .normal)
-        print(closeImage);
         
     }
+    
     
     @available(iOS 9.0, *)
     func addTextView()
@@ -110,46 +116,56 @@ class FeedbackSDKViewController: UIViewController {
                 // Fallback on earlier versions
             }
         }
-        
-
-    }
-    @objc private func keyboardWillChangeFrame(_ notification: Notification)
-    {
-      
-        
-        print("aravind")
-        if let userInfo = notification.userInfo {
-        
-        if let endFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
-        {
-        
-            
-            var keyboardHeight = UIScreen.main.bounds.height - endFrame.origin.y
-            if #available(iOS 11, *) {
-                if keyboardHeight > 0 {
-                    keyboardHeight = keyboardHeight - view.safeAreaInsets.bottom
-                }
-            }
-            textViewBottomConstraint.constant = -keyboardHeight - 8
-            view.layoutIfNeeded()
-        }
-        }
-        
-    }
-    deinit {
-        NotificationCenter.default.removeObserver(self)
     }
     func textViewDidBeginEditing(_ textView: UITextView)
     {
         print("print1")
-        //self.tbView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 320, right: 0)
-        //self .scrollToBottom()
-        
+        self.tbView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 320, right: 0)
+        self.scrollToBottom()
     }
-    
     func textViewDidEndEditing(_ textView: UITextView) {
         print("print2")
-     //   self.tbView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 80, right: 0)
+        self.tbView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 80, right: 0)
+    }
+    func scrollToBottom(){
+        DispatchQueue.main.async {
+            if self.dataArray.count > 1
+            {
+                let indexPath = IndexPath(row: self.dataArray.count-1, section: 0)
+                self.tbView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+            }
+        }
+    }
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    @IBAction func sendAction(_ sender: Any)
+    {
+        if self.textView.text.isEmpty
+        {
+            let alert = UIAlertController(title: "Error!", message: "Please enter feedback", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                switch action.style{
+                case .default:
+                    print("default")
+                    
+                case .cancel:
+                    print("cancel")
+                    
+                case .destructive:
+                    print("destructive")
+                    
+                    
+                }}))
+            self.present(alert, animated: true, completion: nil)
+        }else
+        {
+            //Service impliment with network manager
+            self.dataArray.add(self.textView.text);
+            self.tbView.reloadData()
+            self.scrollToBottom()
+            self.textView.text =  ""
+        }
         
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -157,6 +173,22 @@ class FeedbackSDKViewController: UIViewController {
     }
     @IBAction func closeAction(_ sender: Any) {
         self.dismiss(animated: true, completion: nil);
+    }
+    @objc private func keyboardWillChangeFrame(_ notification: Notification)
+    {
+        if let userInfo = notification.userInfo {
+            if let endFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+            {
+                var keyboardHeight = UIScreen.main.bounds.height - endFrame.origin.y
+                if #available(iOS 11, *) {
+                    if keyboardHeight > 0 {
+                        keyboardHeight = keyboardHeight - view.safeAreaInsets.bottom
+                    }
+                }
+                textViewBottomConstraint.constant = -keyboardHeight - 8
+                view.layoutIfNeeded()
+            }
+        }
     }
 }
 @available(iOS 9.0, *)
@@ -170,3 +202,92 @@ extension FeedbackSDKViewController: GrowingTextViewDelegate {
         }, completion: nil)
     }
 }
+@available(iOS 9.0, *)
+extension FeedbackSDKViewController : UITableViewDataSource,UITableViewDelegate
+{
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
+        return self.dataArray.count;
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
+    {
+        var height : CGFloat = 50.0;
+        if let post_description : String =  self.dataArray.object(at: indexPath.row) as! String
+        {
+        height = heightForView(text: post_description, font: UIFont.systemFont(ofSize: 15) , width: self.view.frame.size.width - 50)
+            height = height + 50;
+        }
+        return height;
+    }
+    func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat
+    {
+        let label:UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: CGFloat.greatestFiniteMagnitude))
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        label.font = font
+        label.text = text
+        
+        label.sizeToFit()
+        return label.frame.height
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    {
+        let msg : String =  self.dataArray.object(at: indexPath.row) as! String
+       let cell : InfoTableViewCell = tableView.dequeueReusableCell(withIdentifier: "info", for: indexPath) as! InfoTableViewCell
+        if let mainView =  cell.contentView.viewWithTag(11)
+        {
+            let labelTitle  : UILabel = mainView.viewWithTag(1) as! UILabel;
+            let labelDesp  : UILabel = mainView.viewWithTag(2) as! UILabel;
+            labelDesp.text = "2019-12-04 08:12:16"
+            labelTitle.text = msg
+            var height : CGFloat = 20.0;
+            height = heightForView(text: msg, font: UIFont.systemFont(ofSize: 15) , width: self.view.frame.size.width - 50) + 5.0
+            
+             mainView.frame =  CGRect(x: 40, y: 5, width: cell.contentView.frame.size.width - 50, height: height + 40)
+             labelTitle.frame =  CGRect(x: 5, y: 10, width: mainView.frame.size.width - 10, height: height);
+             labelDesp.frame = CGRect(x: 5, y: mainView.frame.size.height - 20 , width: mainView.frame.size.width - 10, height: 15);
+            
+        }else
+        {
+            var height : CGFloat = 20.0;
+            height = heightForView(text: msg, font: UIFont.systemFont(ofSize: 15) , width: self.view.frame.size.width - 50) + 5.0
+
+            let mainView : UIView = UIView(frame: CGRect(x: 40, y: 5, width: cell.contentView.frame.size.width - 50, height: height + 40 ))
+            mainView.backgroundColor =  UIColor.init(red: 205.0/255.0, green: 151.0/255.0, blue: 222.0/255.0, alpha: 1.0)
+            mainView.clipsToBounds = true;
+            mainView.layer.cornerRadius  = 5.0;
+            mainView.tag = 11;
+            let labelTitle : UILabel = UILabel(frame: CGRect(x: 5, y: 10, width: mainView.frame.size.width - 10, height: height));
+            labelTitle.tag =  1;
+            labelTitle.font =  UIFont.systemFont(ofSize: 15);
+            labelTitle.textAlignment = .left;
+            labelTitle.numberOfLines = 1000000;
+            
+            let labelDesp : UILabel = UILabel(frame: CGRect(x: 5, y: mainView.frame.size.height - 20 , width: mainView.frame.size.width - 10, height: 15));
+            labelDesp.tag =  2;
+            labelDesp.font =  UIFont.systemFont(ofSize: 10);
+            labelDesp.textAlignment = .right;
+            mainView.addSubview(labelDesp);
+            mainView.addSubview(labelTitle);
+            
+            labelDesp.text = "2019-12-04 08:12:16"
+            labelTitle.text = msg
+            labelTitle.backgroundColor =  UIColor.red;
+            labelTitle.backgroundColor =  UIColor.green;
+
+            labelTitle.textColor = UIColor.clear
+            labelDesp.textColor = UIColor.clear
+
+            cell.contentView.addSubview(mainView);
+        }
+        //let cell : FeedbackMeTableViewCell = (tableView.dequeueReusableCell(withIdentifier: "FeedbackMeTableViewCell") ?? nil)! as! FeedbackMeTableViewCell
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
+    }
+    
+}
+
