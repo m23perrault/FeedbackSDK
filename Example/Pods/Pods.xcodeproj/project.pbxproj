@@ -45,6 +45,7 @@
 		A3329E662257380A0060484C /* InfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3329E652257380A0060484C /* InfoTableViewCell.swift */; };
 		A3329E6D225758060060484C /* close_black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A3329E69225757BD0060484C /* close_black@2x.png */; };
 		A3329E6E225758060060484C /* close_black@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A3329E6A225757BD0060484C /* close_black@3x.png */; };
+		A3329E702257D3850060484C /* StringContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3329E6F2257D3850060484C /* StringContent.swift */; };
 		A5ADEF55257E4C1A482BF072C205F388 /* ParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D399AAE76671B1CC4656FD4F4E596D /* ParameterEncoding.swift */; };
 		A5B11522D7E04AD877C35558905B95A6 /* Request+AlamofireImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CB1F0E80BDD499676AC336338EED9D /* Request+AlamofireImage.swift */; };
 		A5BB9E8DD955AD491A57971270FFB747 /* send_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1253A402A351A3D9E666D4D2EC444BE /* send_button@2x.png */; };
@@ -197,6 +198,7 @@
 		A3329E652257380A0060484C /* InfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InfoTableViewCell.swift; path = FeedbackSDK/Classes/InfoTableViewCell.swift; sourceTree = "<group>"; };
 		A3329E69225757BD0060484C /* close_black@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "close_black@2x.png"; path = "FeedbackSDK/FeedbackSDKResources/close_black@2x.png"; sourceTree = "<group>"; };
 		A3329E6A225757BD0060484C /* close_black@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "close_black@3x.png"; path = "FeedbackSDK/FeedbackSDKResources/close_black@3x.png"; sourceTree = "<group>"; };
+		A3329E6F2257D3850060484C /* StringContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StringContent.swift; path = FeedbackSDK/Classes/StringContent.swift; sourceTree = "<group>"; };
 		A34A6F5722FF40C25DCE59EE56C4D4A6 /* AlamofireImage.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = AlamofireImage.modulemap; sourceTree = "<group>"; };
 		A3635EF23C2E1828B115DB89040C0492 /* Pods-FeedbackSDK_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-FeedbackSDK_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		A36BAB8B8FC78B3F9624872F234E4FD4 /* MultipartFormData.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MultipartFormData.swift; path = Source/MultipartFormData.swift; sourceTree = "<group>"; };
@@ -420,6 +422,7 @@
 		8AFEEE6EBFBE09D2BB4F05A48C133662 /* FeedbackSDK */ = {
 			isa = PBXGroup;
 			children = (
+				A3329E6F2257D3850060484C /* StringContent.swift */,
 				3B0DE3A20B21F8391B6FC24B08569DC9 /* FeedbackMeTableViewCell.swift */,
 				918E4541702317D113A485E05982C2CE /* FeedbackSDKManager.swift */,
 				B20B1A2B50F2B484E66B85EA8DA8365C /* FeedbackSDKViewController.swift */,
@@ -883,6 +886,7 @@
 				A3329E662257380A0060484C /* InfoTableViewCell.swift in Sources */,
 				639C12906D0C2F213BBEDDDDF25FC00B /* FeedbackSDKViewController.swift in Sources */,
 				5912E152DC1E4D256234C9E1EB3973C3 /* NetworkManager.swift in Sources */,
+				A3329E702257D3850060484C /* StringContent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

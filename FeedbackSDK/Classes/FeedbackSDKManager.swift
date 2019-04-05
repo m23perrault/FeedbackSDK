@@ -11,12 +11,12 @@ import Foundation
 public class FeedbackSDKManager
 {
     var sdk_app_id =  ""
-     var sdk_secret_key =  ""
-   public typealias completionHandler = (Bool, Error?) -> Void
-
-   public static let sdkInstance = FeedbackSDKManager()
+    var sdk_secret_key =  ""
+    public typealias completionHandler = (Bool, Error?) -> Void
     
-  public  func initSDKWithAppId_SecretKey(SDK_APP_ID:String, SDK_APP_SECRET_KEY:String, completionHandler: @escaping completionHandler)
+    public static let sdkInstance = FeedbackSDKManager()
+    
+    public  func initSDKWithAppId_SecretKey(SDK_APP_ID:String, SDK_APP_SECRET_KEY:String, completionHandler: @escaping completionHandler)
     {
         if SDK_APP_ID.isEmpty
         {
@@ -27,34 +27,59 @@ public class FeedbackSDKManager
         }
         else
         {
-        self.sdk_app_id = SDK_APP_ID;
-        self.sdk_secret_key = SDK_APP_SECRET_KEY;
+            self.sdk_app_id = SDK_APP_ID;
+            self.sdk_secret_key = SDK_APP_SECRET_KEY;
+            
+            let param:[String:String] = ["app_id":self.sdk_app_id,"secret_key":self.sdk_secret_key,"device_token":"ios12121","device_type":"ios"];
+            
+            let network = NetworkManager.shared
+            
+            network.callServerWithRequest(urlString: StringContent.APP_DETAILS_API, type: "POST", param: param, completion: { (json:[String:Any], err:Error?) in
+                if err != nil
+                {
+                    print("Some error came - ",err!)
+                    return completionHandler(false,   NSError.init(domain: "com.feedBackSDK", code: 123, userInfo: ["info":err?.localizedDescription ?? ""]))
 
-        print(SDK_APP_ID);
-        print(SDK_APP_SECRET_KEY);
-    }
-
+                }
+                DispatchQueue.main.async {
+                    if let status:NSInteger = json["status"] as? NSInteger
+                    {
+                        if status == 1
+                        {
+                            return completionHandler(true, nil)
+                        }else
+                        {
+                            return completionHandler(false,   NSError.init(domain: "com.feedBackSDK", code: status, userInfo: ["info": json["message"] ?? ""]))
+                        }
+                    }
+                }
+            })
+            
+            print(SDK_APP_ID);
+            print(SDK_APP_SECRET_KEY);
+        }
+        
     }
     public func showFeedbackViewController()
     {
         print(self.sdk_app_id);
-
+        
         print("aravind kumar")
         if #available(iOS 9.0, *) {
-      
-        var resourcesBundle : Bundle? = nil;
-       let containingBundle = Bundle(for: FeedbackSDKViewController.self)
-        let resourcesBundleURL =  containingBundle.url(forResource: "FeedbackSDKResources", withExtension: "bundle");
-        if let bb  : URL = resourcesBundleURL
-        {
-            resourcesBundle =  Bundle(url: bb)
-        }
-        
-        let viewCOntroller  = FeedbackSDKViewController(nibName: "FeedbackSDKViewController", bundle: resourcesBundle)
-        
-        UIApplication.shared.keyWindow?.rootViewController?.present(viewCOntroller, animated: true, completion: nil)
-
+            
+            var resourcesBundle : Bundle? = nil;
+            let containingBundle = Bundle(for: FeedbackSDKViewController.self)
+            let resourcesBundleURL =  containingBundle.url(forResource: "FeedbackSDKResources", withExtension: "bundle");
+            if let bb  : URL = resourcesBundleURL
+            {
+                resourcesBundle =  Bundle(url: bb)
+            }
+            
+            let viewCOntroller  = FeedbackSDKViewController(nibName: "FeedbackSDKViewController", bundle: resourcesBundle)
+            
+            UIApplication.shared.keyWindow?.rootViewController?.present(viewCOntroller, animated: true, completion: nil)
+            
         }
     }
-
+    
 }

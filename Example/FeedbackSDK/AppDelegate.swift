@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        FeedbackSDKManager.sdkInstance.initSDKWithAppId_SecretKey(SDK_APP_ID: "app_id", SDK_APP_SECRET_KEY: "sec_key") { (status, err) in
+        FeedbackSDKManager.sdkInstance.initSDKWithAppId_SecretKey(SDK_APP_ID: "85608736615350450", SDK_APP_SECRET_KEY: "sc_ky505522780362141") { (status, err) in
             
         };
         return true

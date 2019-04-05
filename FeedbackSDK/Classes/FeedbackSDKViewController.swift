@@ -161,6 +161,28 @@ class FeedbackSDKViewController: UIViewController
         }else
         {
             //Service impliment with network manager
+            
+            let param:[String:String] = ["app_id":FeedbackSDKManager.sdkInstance.sdk_app_id,"secret_key":FeedbackSDKManager.sdkInstance.sdk_secret_key,"device_token":"ios12121","device_type":"ios","message":self.textView.text,"strSendMessage":"1","reply_message":self.textView.text,"page":"1"];
+                let network = NetworkManager.shared
+                
+                network.callServerWithRequest(urlString: StringContent.APP_DETAILS_API, type: "POST", param: param, completion: { (json:[String:Any], err:Error?) in
+                    if err != nil
+                    {
+                    }
+                    DispatchQueue.main.async {
+                        if let status:NSInteger = json["status"] as? NSInteger
+                        {
+                            if status == 1
+                            {
+                            }else
+                            {
+                            }
+                        }
+                    }
+                })
+                
+             
+            
             self.dataArray.add(self.textView.text);
             self.tbView.reloadData()
             self.scrollToBottom()
@@ -189,6 +211,35 @@ class FeedbackSDKViewController: UIViewController
                 view.layoutIfNeeded()
             }
         }
+    }
+    func getAllMesseage()  {
+        //Service impliment with network manager
+        
+        let param:[String:String] = ["app_id":FeedbackSDKManager.sdkInstance.sdk_app_id,"secret_key":FeedbackSDKManager.sdkInstance.sdk_secret_key,"device_token":"ios12121","device_type":"ios","message":self.textView.text,"strSendMessage":"0","reply_message":self.textView.text,"page":"1"];
+        let network = NetworkManager.shared
+        
+        network.callServerWithRequest(urlString: StringContent.APP_DETAILS_API, type: "POST", param: param, completion: { (json:[String:Any], err:Error?) in
+            if err != nil
+            {
+            }
+            DispatchQueue.main.async {
+                if let status:NSInteger = json["status"] as? NSInteger
+                {
+                    if status == 1
+                    {
+                    }else
+                    {
+                    }
+                }
+            }
+        })
+        
+        
+        
+        self.dataArray.add(self.textView.text);
+        self.tbView.reloadData()
+        self.scrollToBottom()
+        self.textView.text =  ""
     }
 }
 @available(iOS 9.0, *)

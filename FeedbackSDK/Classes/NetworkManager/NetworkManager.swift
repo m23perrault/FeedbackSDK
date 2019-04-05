@@ -11,9 +11,7 @@ import UIKit
 import Alamofire
 
 let baseURL:String = "http://www.apptenium.com/index.php?r=api/v1/"
-let FEEDBACK_API:String = "feedback/create"
-let REPLY_API:String = "reply/create"
-let APP_DETAILS_API:String = "feedback/install"
+
 
 public class NetworkManager
 {
