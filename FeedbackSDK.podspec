@@ -35,6 +35,7 @@ TODO: Add long description of the pod here.
    s.frameworks = "AVFoundation","Foundation","UIKit"
    s.dependency 'AlamofireImage', '~> 3.5'
 s.dependency 'GrowingTextView', '0.6.1'
+s.dependency 'JGProgressHUD'
    s.ios.resource_bundle = {
     'FeedbackSDKResources' => ['FeedbackSDK/FeedbackSDKResources/*']
   }

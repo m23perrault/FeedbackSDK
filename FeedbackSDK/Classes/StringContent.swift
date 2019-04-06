@@ -12,5 +12,7 @@ class StringContent: NSObject
 {
     static let APP_DETAILS_API            =     "feedback/install"
     static let FEEDBACK_API               =     "feedback/create"
-    static let REPLY_API                  =     "reply/create"
+    static let REPLY_API                  =     "reply/create&per-page=1000000&page=1"
+    static let loadingMessage = "Loading..."
+
 }

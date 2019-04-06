@@ -12,6 +12,7 @@ public class FeedbackSDKManager
 {
     var sdk_app_id =  ""
     var sdk_secret_key =  ""
+    var uniqId =  "";
     public typealias completionHandler = (Bool, Error?) -> Void
     
     public static let sdkInstance = FeedbackSDKManager()
@@ -29,12 +30,15 @@ public class FeedbackSDKManager
         {
             self.sdk_app_id = SDK_APP_ID;
             self.sdk_secret_key = SDK_APP_SECRET_KEY;
+            self.uniqId = UIDevice.current.identifierForVendor!.uuidString
+
+            print( self.uniqId);
             
-            let param:[String:String] = ["app_id":self.sdk_app_id,"secret_key":self.sdk_secret_key,"device_token":"ios12121","device_type":"ios"];
+            let param:[String:String] = ["app_id":self.sdk_app_id,"secret_key":self.sdk_secret_key,"device_token":self.uniqId,"device_type":"ios"];
             
             let network = NetworkManager.shared
             
-            network.callServerWithRequest(urlString: StringContent.APP_DETAILS_API, type: "POST", param: param, completion: { (json:[String:Any], err:Error?) in
+            network.callServerWithRequest(urlString: StringContent.APP_DETAILS_API, type: "PUT", param: param, completion: { (json:[String:Any], err:Error?) in
                 if err != nil
                 {
                     print("Some error came - ",err!)
@@ -42,9 +46,11 @@ public class FeedbackSDKManager
 
                 }
                 DispatchQueue.main.async {
+                    print(json);
+                    
                     if let status:NSInteger = json["status"] as? NSInteger
                     {
-                        if status == 1
+                        if status == 200 ||  status == 409
                         {
                             return completionHandler(true, nil)
                         }else
@@ -62,9 +68,15 @@ public class FeedbackSDKManager
     }
     public func showFeedbackViewController()
     {
-        print(self.sdk_app_id);
-        
-        print("aravind kumar")
+        if self.sdk_app_id.isEmpty
+            {
+              print("Please inizilize app with secret key")
+            }
+        if self.sdk_secret_key.isEmpty
+        {
+            print("Please inizilize app with secret key ")
+        }else
+        {
         if #available(iOS 9.0, *) {
             
             var resourcesBundle : Bundle? = nil;
@@ -74,11 +86,10 @@ public class FeedbackSDKManager
             {
                 resourcesBundle =  Bundle(url: bb)
             }
-            
             let viewCOntroller  = FeedbackSDKViewController(nibName: "FeedbackSDKViewController", bundle: resourcesBundle)
-            
             UIApplication.shared.keyWindow?.rootViewController?.present(viewCOntroller, animated: true, completion: nil)
             
+        }
         }
     }
     

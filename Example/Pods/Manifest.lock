@@ -5,7 +5,9 @@ PODS:
   - FeedbackSDK (0.1.2):
     - AlamofireImage (~> 3.5)
     - GrowingTextView (= 0.6.1)
+    - JGProgressHUD
   - GrowingTextView (0.6.1)
+  - JGProgressHUD (2.0.3)
 
 DEPENDENCIES:
   - FeedbackSDK (from `../`)
@@ -15,6 +17,7 @@ SPEC REPOS:
     - Alamofire
     - AlamofireImage
     - GrowingTextView
+    - JGProgressHUD
 
 EXTERNAL SOURCES:
   FeedbackSDK:
@@ -23,8 +26,9 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
   AlamofireImage: 63cfe3baf1370be6c498149687cf6db3e3b00999
-  FeedbackSDK: 1fe1af4faab01421a51f1b034bb537aaa17af57f
+  FeedbackSDK: 4ce10bb0431fa503c0905d8789320b2b6d824d07
   GrowingTextView: 335aefa45df7df06b01edede1363414d6ee5d6bc
+  JGProgressHUD: 12b20a8f4ffe05258f8635c1ab92816e451f904d
 
 PODFILE CHECKSUM: c7877877ffddfffae6bfc9fb09d0cce54d4c252e
 

@@ -7,12 +7,13 @@
 
 import UIKit
 import GrowingTextView
+import JGProgressHUD
 
 @available(iOS 9.0, *)
 class FeedbackSDKViewController: UIViewController
 {
     
-    var dataArray  =  NSMutableArray()
+    var dataArray  =  NSArray()
     @IBOutlet weak var tbView: UITableView!
     private var textView: GrowingTextView!
     private var textViewBottomConstraint: NSLayoutConstraint!
@@ -22,8 +23,10 @@ class FeedbackSDKViewController: UIViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.tbView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 80, right: 0)
+
         self.addInformationOverView()
+        self.getAllMesseage()
         
         // Do any additional setup after loading the view.
     }
@@ -162,31 +165,41 @@ class FeedbackSDKViewController: UIViewController
         {
             //Service impliment with network manager
             
-            let param:[String:String] = ["app_id":FeedbackSDKManager.sdkInstance.sdk_app_id,"secret_key":FeedbackSDKManager.sdkInstance.sdk_secret_key,"device_token":"ios12121","device_type":"ios","message":self.textView.text,"strSendMessage":"1","reply_message":self.textView.text,"page":"1"];
+            let param:[String:String] = ["app_id":FeedbackSDKManager.sdkInstance.sdk_app_id,"secret_key":FeedbackSDKManager.sdkInstance.sdk_secret_key,"device_id": FeedbackSDKManager.sdkInstance.uniqId,"device_type":"ios","sendMessage":"1","reply_message":self.textView.text];
+            
                 let network = NetworkManager.shared
-                
-                network.callServerWithRequest(urlString: StringContent.APP_DETAILS_API, type: "POST", param: param, completion: { (json:[String:Any], err:Error?) in
+            
+            let hud = JGProgressHUD(style: .dark)
+            hud.textLabel.text = StringContent.loadingMessage
+            hud.isUserInteractionEnabled =  false;
+            hud.show(in: self.view)
+            
+                network.callServerWithRequest(urlString: StringContent.REPLY_API, type: "POST", param: param, completion: { (json:[String:Any], err:Error?) in
                     if err != nil
                     {
                     }
                     DispatchQueue.main.async {
                         if let status:NSInteger = json["status"] as? NSInteger
                         {
-                            if status == 1
+                            if status == 200
                             {
+                                if let  data : NSArray =  json["data"] as? NSArray
+                                {
+                                    print(data);
+                                    
+                                    self.dataArray =  data.reversed() as NSArray
+                                    self.tbView.reloadData()
+                                    self.scrollToBottom()
+                                    self.textView.text =  ""
+                                }
                             }else
                             {
                             }
                         }
                     }
-                })
-                
-             
-            
-            self.dataArray.add(self.textView.text);
-            self.tbView.reloadData()
-            self.scrollToBottom()
-            self.textView.text =  ""
+                    hud.dismiss()
+                }
+            )
         }
         
     }
@@ -215,31 +228,40 @@ class FeedbackSDKViewController: UIViewController
     func getAllMesseage()  {
         //Service impliment with network manager
         
-        let param:[String:String] = ["app_id":FeedbackSDKManager.sdkInstance.sdk_app_id,"secret_key":FeedbackSDKManager.sdkInstance.sdk_secret_key,"device_token":"ios12121","device_type":"ios","message":self.textView.text,"strSendMessage":"0","reply_message":self.textView.text,"page":"1"];
-        let network = NetworkManager.shared
+        let param:[String:String] = ["app_id":FeedbackSDKManager.sdkInstance.sdk_app_id,"secret_key":FeedbackSDKManager.sdkInstance.sdk_secret_key,"device_id": FeedbackSDKManager.sdkInstance.uniqId,"device_type":"ios","sendMessage":"0","reply_message":""];
         
-        network.callServerWithRequest(urlString: StringContent.APP_DETAILS_API, type: "POST", param: param, completion: { (json:[String:Any], err:Error?) in
+        let network = NetworkManager.shared
+        let hud = JGProgressHUD(style: .dark)
+        hud.textLabel.text = StringContent.loadingMessage
+        hud.isUserInteractionEnabled =  false;
+        hud.show(in: self.view)
+        network.callServerWithRequest(urlString: StringContent.REPLY_API, type: "POST", param: param, completion: { (json:[String:Any], err:Error?) in
             if err != nil
             {
             }
             DispatchQueue.main.async {
                 if let status:NSInteger = json["status"] as? NSInteger
                 {
-                    if status == 1
+                    if status == 200
                     {
+                        if let  data : NSArray =  json["data"] as? NSArray
+                        {
+                            print(data);
+                            self.dataArray =  data.reversed() as NSArray
+                            
+                            self.tbView.reloadData()
+                            self.scrollToBottom()
+                            self.textView.text =  ""
+                        }
                     }else
                     {
                     }
                 }
             }
+            hud.dismiss()
         })
         
-        
-        
-        self.dataArray.add(self.textView.text);
-        self.tbView.reloadData()
-        self.scrollToBottom()
-        self.textView.text =  ""
+       
     }
 }
 @available(iOS 9.0, *)
@@ -264,7 +286,8 @@ extension FeedbackSDKViewController : UITableViewDataSource,UITableViewDelegate
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
         var height : CGFloat = 50.0;
-        if let post_description : String =  self.dataArray.object(at: indexPath.row) as! String
+        let msgInfo : NSDictionary =  self.dataArray.object(at: indexPath.row) as! NSDictionary
+        if let post_description : String = msgInfo["message"] as! String
         {
         height = heightForView(text: post_description, font: UIFont.systemFont(ofSize: 15) , width: self.view.frame.size.width - 50)
             height = height + 50;
@@ -284,13 +307,16 @@ extension FeedbackSDKViewController : UITableViewDataSource,UITableViewDelegate
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        let msg : String =  self.dataArray.object(at: indexPath.row) as! String
+        let msgInfo : NSDictionary =  self.dataArray.object(at: indexPath.row) as! NSDictionary
+        let msg : String = msgInfo["message"] as! String;
+        let created_on : String = msgInfo["created_on"] as! String;
+
        let cell : InfoTableViewCell = tableView.dequeueReusableCell(withIdentifier: "info", for: indexPath) as! InfoTableViewCell
         if let mainView =  cell.contentView.viewWithTag(11)
         {
             let labelTitle  : UILabel = mainView.viewWithTag(1) as! UILabel;
             let labelDesp  : UILabel = mainView.viewWithTag(2) as! UILabel;
-            labelDesp.text = "2019-12-04 08:12:16"
+            labelDesp.text = created_on
             labelTitle.text = msg
             var height : CGFloat = 20.0;
             height = heightForView(text: msg, font: UIFont.systemFont(ofSize: 15) , width: self.view.frame.size.width - 50) + 5.0
@@ -322,13 +348,13 @@ extension FeedbackSDKViewController : UITableViewDataSource,UITableViewDelegate
             mainView.addSubview(labelDesp);
             mainView.addSubview(labelTitle);
             
-            labelDesp.text = "2019-12-04 08:12:16"
+            labelDesp.text = created_on
             labelTitle.text = msg
-            labelTitle.backgroundColor =  UIColor.red;
-            labelTitle.backgroundColor =  UIColor.green;
+            labelTitle.backgroundColor =  UIColor.clear;
+            labelTitle.backgroundColor =  UIColor.clear;
 
-            labelTitle.textColor = UIColor.clear
-            labelDesp.textColor = UIColor.clear
+            labelTitle.textColor = UIColor.white
+            labelDesp.textColor = UIColor.white
 
             cell.contentView.addSubview(mainView);
         }

@@ -24,9 +24,31 @@ public class NetworkManager
     {
         let urlStr:String = baseURL + urlString
         let header:HTTPHeaders = ["Content-Type":"application/json"]
+        
         if type == "POST"
         {
-            Alamofire.request(urlStr, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON { (response:DataResponse) in
+    
+            Alamofire.request(urlStr, method: .post, parameters: param, encoding: URLEncoding.default, headers: nil).responseJSON { (response:DataResponse) in
+                if let data = response.data {
+                    print(String(data: data, encoding: String.Encoding.utf8)!)
+                }
+                switch response.result
+                {
+                case .success(let jsonFetched):
+                    //    print(jsonFetched)
+                    completion(jsonFetched as! [String:Any], nil)
+                    break
+                case .failure(let err):
+                    //    print(err)
+                    completion([:], err)
+                    break
+                }
+            }
+        }
+       else  if type == "PUT"
+        {
+            
+            Alamofire.request(urlStr, method: .put, parameters: param, encoding: URLEncoding.httpBody, headers: header).responseJSON { (response:DataResponse) in
                 if let data = response.data {
                     print(String(data: data, encoding: String.Encoding.utf8)!)
                 }
@@ -45,7 +67,7 @@ public class NetworkManager
         }
         else
         {
-            Alamofire.request(urlStr, method: .get, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON { (response:DataResponse) in
+            Alamofire.request(urlStr, method: .get, parameters: param, encoding: URLEncoding.default, headers: header).responseJSON { (response:DataResponse) in
                 switch response.result
                 {
                 case .success(let jsonFetched):

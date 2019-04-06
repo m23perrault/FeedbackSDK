@@ -32,6 +32,9 @@
     ],
     "GrowingTextView": [
       "0.6.1"
+    ],
+    "JGProgressHUD": [
+
     ]
   },
   "ios": {
