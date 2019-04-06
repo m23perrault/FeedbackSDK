@@ -12,7 +12,6 @@ import JGProgressHUD
 @available(iOS 9.0, *)
 class FeedbackSDKViewController: UIViewController
 {
-    
     var dataArray  =  NSArray()
     @IBOutlet weak var tbView: UITableView!
     private var textView: GrowingTextView!
@@ -312,6 +311,8 @@ extension FeedbackSDKViewController : UITableViewDataSource,UITableViewDelegate
         let created_on : String = msgInfo["created_on"] as! String;
 
        let cell : InfoTableViewCell = tableView.dequeueReusableCell(withIdentifier: "info", for: indexPath) as! InfoTableViewCell
+        cell.selectionStyle = .none;
+        
         if let mainView =  cell.contentView.viewWithTag(11)
         {
             let labelTitle  : UILabel = mainView.viewWithTag(1) as! UILabel;

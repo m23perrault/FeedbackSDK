@@ -32,7 +32,7 @@ TODO: Add long description of the pod here.
 
   s.source_files = 'FeedbackSDK/Classes/**/*'
    s.public_header_files = 'FeedbackSDK/Classes/*.h',
-   s.frameworks = "AVFoundation","Foundation","UIKit"
+   s.frameworks = "AVFoundation","Foundation","UIKit","StoreKit"
    s.dependency 'AlamofireImage', '~> 3.5'
 s.dependency 'GrowingTextView', '0.6.1'
 s.dependency 'JGProgressHUD'

@@ -70,6 +70,9 @@
 		95CD0B57AD6DCCD4DECC820D4C48555B /* JGProgressHUDImageIndicatorView.h in Headers */ = {isa = PBXBuildFile; fileRef = 7146E6DA724D8CB25B816415AC83FC1C /* JGProgressHUDImageIndicatorView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9A8EBBB1D0DFA6995805E4B3C3196AC2 /* FeedbackSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C3780782D0D09EF5CC12BA349F12FBF9 /* FeedbackSDKResources.bundle */; };
 		9CC6B0302778716EF7F394CAF89D2CE6 /* JGProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288D8AD9AA9ECFE90E18D8601CC02954 /* JGProgressHUD.framework */; };
+		A3329E722258A4AA0060484C /* FeedbackSDKReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3329E712258A4AA0060484C /* FeedbackSDKReview.swift */; };
+		A3329E752258EF110060484C /* FeedbackSDKRatingPoupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3329E732258EF110060484C /* FeedbackSDKRatingPoupVC.swift */; };
+		A3329E792258F0870060484C /* FeedbackSDKRatingPoupVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3329E772258EF3F0060484C /* FeedbackSDKRatingPoupVC.xib */; };
 		A5ADEF55257E4C1A482BF072C205F388 /* ParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C922050CF04A78ECC2EA207EB62D0C /* ParameterEncoding.swift */; };
 		A5B11522D7E04AD877C35558905B95A6 /* Request+AlamofireImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED731CA2F0F8FBD93EA5B9BF4246E42 /* Request+AlamofireImage.swift */; };
 		A8B901B34DFC56E5BCE08B7FE8918A9D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED122EB73931E88F88822B41331CD71E /* Foundation.framework */; };
@@ -299,6 +302,9 @@
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9F6A5313830B8C60CA475FFE90C3478E /* ImageFilter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImageFilter.swift; path = Source/ImageFilter.swift; sourceTree = "<group>"; };
 		A23466E081D255E0BE3508F62C589836 /* JGProgressHUDPieIndicatorView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JGProgressHUDPieIndicatorView.m; path = JGProgressHUD/JGProgressHUD/JGProgressHUDPieIndicatorView.m; sourceTree = "<group>"; };
+		A3329E712258A4AA0060484C /* FeedbackSDKReview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FeedbackSDKReview.swift; path = FeedbackSDK/Classes/FeedbackSDKReview.swift; sourceTree = "<group>"; };
+		A3329E732258EF110060484C /* FeedbackSDKRatingPoupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FeedbackSDKRatingPoupVC.swift; path = FeedbackSDK/Classes/FeedbackSDKRatingPoupVC.swift; sourceTree = "<group>"; };
+		A3329E772258EF3F0060484C /* FeedbackSDKRatingPoupVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FeedbackSDKRatingPoupVC.xib; path = FeedbackSDK/FeedbackSDKResources/FeedbackSDKRatingPoupVC.xib; sourceTree = "<group>"; };
 		A3635EF23C2E1828B115DB89040C0492 /* Pods-FeedbackSDK_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-FeedbackSDK_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		A8084A231A56F07DD361938790FBA7D6 /* Alamofire.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Alamofire.xcconfig; sourceTree = "<group>"; };
 		AE4710427978D35666FFEBA7F1DC4520 /* FeedbackSDK-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "FeedbackSDK-prefix.pch"; sourceTree = "<group>"; };
@@ -582,6 +588,8 @@
 		8AD4205E8AA95D131B6615E94FE69B3D /* FeedbackSDK */ = {
 			isa = PBXGroup;
 			children = (
+				A3329E732258EF110060484C /* FeedbackSDKRatingPoupVC.swift */,
+				A3329E712258A4AA0060484C /* FeedbackSDKReview.swift */,
 				66F5A0E5077CDFD85BD1FB8725BA487C /* FeedbackMeTableViewCell.swift */,
 				3417F3D168F565529391F606DBA3DCBB /* FeedbackSDKManager.swift */,
 				E67578A9E4F757E5167A8AB90CDF5C88 /* FeedbackSDKViewController.swift */,
@@ -749,6 +757,7 @@
 		F4DF14BC78DEA07F4A5FB221E0FB282E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A3329E772258EF3F0060484C /* FeedbackSDKRatingPoupVC.xib */,
 				274BD93114268264DEDE9F2F99174E7D /* close_black@2x.png */,
 				2815A74FE33BB72BD9E30D204F396A89 /* close_black@3x.png */,
 				199D5D54B741952D0F541A7E2CF2BE90 /* FeedbackSDKResources.bundle */,
@@ -1096,6 +1105,7 @@
 				64AD7AC513F9862BC516F959B6EF2F27 /* send_button.png in Resources */,
 				866A39F2F8839D91701829E4FE4D29C3 /* send_button@2x.png in Resources */,
 				AA61F2D908860F3198E81F4EF316826B /* send_button@3x.png in Resources */,
+				A3329E792258F0870060484C /* FeedbackSDKRatingPoupVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1142,8 +1152,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				F11DC785EC5D2C10E7CEC9151C522159 /* FeedbackMeTableViewCell.swift in Sources */,
+				A3329E752258EF110060484C /* FeedbackSDKRatingPoupVC.swift in Sources */,
 				8E4FA6F939F2F314A9168053AE51EDCF /* FeedbackSDK-dummy.m in Sources */,
 				B4946261FA66A9D8BE0EA47DDF9132F9 /* FeedbackSDKManager.swift in Sources */,
+				A3329E722258A4AA0060484C /* FeedbackSDKReview.swift in Sources */,
 				CBDBB8FAD89285B2562700DADE76FE8E /* FeedbackSDKViewController.swift in Sources */,
 				81F66A513A6A013C1A8016B23EB94B86 /* InfoTableViewCell.swift in Sources */,
 				D025501D578E6436AA083F418783F41C /* NetworkManager.swift in Sources */,

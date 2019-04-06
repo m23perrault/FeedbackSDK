@@ -10,9 +10,19 @@ import Foundation
 
 public class FeedbackSDKManager
 {
+    var DEFAULT_TITLE = "Rate Me";
+    var DEFAULT_RATE_TEXT = "Hi! If you like this App, can you please take a few minutes to rate it? It help so much when you do , thanks!";
+    var DEFAULT_YES_RATE = "Yes";
+    var DEFAULT_MAY_BE_LATER = "Maybe Later";
+    var DEFAULT_NO_THANKS = "No, Thanks";
+    var DEFAULT_DAYS_BEFORE_PROMPT = 3;
+    var DEFAULT_LAUNCH_BEFORE_PROMPT = 7;
+    
+    
     var sdk_app_id =  ""
     var sdk_secret_key =  ""
     var uniqId =  "";
+    
     public typealias completionHandler = (Bool, Error?) -> Void
     
     public static let sdkInstance = FeedbackSDKManager()
@@ -33,6 +43,15 @@ public class FeedbackSDKManager
             self.uniqId = UIDevice.current.identifierForVendor!.uuidString
 
             print( self.uniqId);
+            
+            // Do any additional setup after loading the view, typically from a nib.
+            /** call 'showReviewView' method with desired launch counts needed. **/
+            if #available(iOS 10.3, *) {
+                FeedbackSDKReview().showReviewView()
+            }else{
+                // Review View is unvailable for lower versions. Please use your custom view.
+            }
+            
             
             let param:[String:String] = ["app_id":self.sdk_app_id,"secret_key":self.sdk_secret_key,"device_token":self.uniqId,"device_type":"ios"];
             
@@ -91,6 +110,16 @@ public class FeedbackSDKManager
             
         }
         }
+    }
+    public func addRatingPopUInformation(DEFAULT_TITLE:String,DEFAULT_RATE_TEXT:String,DEFAULT_YES_RATE:String,DEFAULT_MAY_BE_LATER:String,DEFAULT_NO_THANKS:String,DEFAULT_DAYS_BEFORE_PROMPT:Int,DEFAULT_LAUNCH_BEFORE_PROMPT:Int)
+    {
+         self.DEFAULT_TITLE = DEFAULT_TITLE;
+         self.DEFAULT_RATE_TEXT = DEFAULT_RATE_TEXT;
+         self.DEFAULT_YES_RATE = DEFAULT_YES_RATE;
+         self.DEFAULT_MAY_BE_LATER = DEFAULT_MAY_BE_LATER;
+         self.DEFAULT_NO_THANKS = DEFAULT_NO_THANKS;
+         self.DEFAULT_DAYS_BEFORE_PROMPT = DEFAULT_DAYS_BEFORE_PROMPT;
+         self.DEFAULT_LAUNCH_BEFORE_PROMPT = DEFAULT_LAUNCH_BEFORE_PROMPT;
     }
     
 }

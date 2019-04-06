@@ -24,7 +24,8 @@
     "FeedbackSDK/Classes/*.h",
     "AVFoundation",
     "Foundation",
-    "UIKit"
+    "UIKit",
+    "StoreKit"
   ],
   "dependencies": {
     "AlamofireImage": [
