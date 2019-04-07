@@ -38,19 +38,18 @@ public class FeedbackSDKManager
         }
         else
         {
+            
             self.sdk_app_id = SDK_APP_ID;
             self.sdk_secret_key = SDK_APP_SECRET_KEY;
             self.uniqId = UIDevice.current.identifierForVendor!.uuidString
+
+         Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(showAfterLunch), userInfo: nil, repeats: false)
 
             print( self.uniqId);
             
             // Do any additional setup after loading the view, typically from a nib.
             /** call 'showReviewView' method with desired launch counts needed. **/
-            if #available(iOS 10.3, *) {
-                FeedbackSDKReview().showReviewView()
-            }else{
-                // Review View is unvailable for lower versions. Please use your custom view.
-            }
+          
             
             
             let param:[String:String] = ["app_id":self.sdk_app_id,"secret_key":self.sdk_secret_key,"device_token":self.uniqId,"device_type":"ios"];
@@ -82,8 +81,17 @@ public class FeedbackSDKManager
             
             print(SDK_APP_ID);
             print(SDK_APP_SECRET_KEY);
+          
         }
         
+    }
+    @objc public func showAfterLunch()
+    {
+        if #available(iOS 10.3, *) {
+            FeedbackSDKReview().showReviewView()
+        }else{
+            // Review View is unvailable for lower versions. Please use your custom view.
+        }
     }
     public func showFeedbackViewController()
     {

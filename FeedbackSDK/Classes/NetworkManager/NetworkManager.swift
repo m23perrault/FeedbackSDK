@@ -15,7 +15,7 @@ let baseURL:String = "http://www.apptenium.com/index.php?r=api/v1/"
 
 public class NetworkManager
 {
-    
+    var popupObj : FeedbackSDKRatingPoupVC!
     static let shared = NetworkManager()
     typealias completionHandler = ([String:Any], Error?) -> Void
     private init() {

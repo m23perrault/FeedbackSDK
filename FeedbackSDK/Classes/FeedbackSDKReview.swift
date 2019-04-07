@@ -61,8 +61,10 @@ class FeedbackSDKReview {
             resourcesBundle =  Bundle(url: bb)
         }
         let viewCOntroller  = FeedbackSDKRatingPoupVC(nibName: "FeedbackSDKRatingPoupVC", bundle: resourcesBundle)
-        UIApplication.shared.keyWindow?.addSubview(viewCOntroller.view)
-        
+            NetworkManager.shared.popupObj = viewCOntroller;
+            viewCOntroller.view.frame = UIApplication.shared.keyWindow!.bounds
+            viewCOntroller.view.backgroundColor =  UIColor.clear
+            UIApplication.shared.keyWindow?.addSubview(viewCOntroller.view);
         return;
         
         if(self.isReviewViewToBeDisplayed()){
