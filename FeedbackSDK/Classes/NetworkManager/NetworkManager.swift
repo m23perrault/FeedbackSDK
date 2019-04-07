@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import Alamofire
+import StoreKit
 
 let baseURL:String = "http://www.apptenium.com/index.php?r=api/v1/"
 
@@ -82,5 +83,30 @@ public class NetworkManager
             }
         }
     }
+    func showAppleReview()
+    {
+            if #available(iOS 10.3, *)
+            {
+                SKStoreReviewController.requestReview()
+                
+            } else {
+                // Fallback on earlier versions
+                let alert = UIAlertController(title: "", message: "Please update your  app?", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                    switch action.style{
+                    case .default:
+                        print("default")
+                        
+                    case .cancel:
+                        print("cancel")
+                        
+                    case .destructive:
+                        print("destructive")
+                        
+                        
+                    }}))
+                UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: nil)
+            }
+        }
     
 }

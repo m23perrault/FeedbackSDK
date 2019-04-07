@@ -7,21 +7,29 @@
 
 
 import UIKit
-import StoreKit
-
 class FeedbackSDKReview {
     
     
     func isReviewViewToBeDisplayed() -> Bool {
-        
        //case for date
         let ud:UserDefaults = UserDefaults.standard
+        if ud.object(forKey: "isNoThnks") != nil
+        {
+              return false
+        }
+        if ud.object(forKey: "popupCount") != nil
+        {
+            if let popupCount : Int = ud.integer(forKey: "popupCount")
+        {
+           if  popupCount >  FeedbackSDKManager.sdkInstance.DEFAULT_LAUNCH_BEFORE_PROMPT
+                {
+                    return false
+            }
+        }
+        }
         if let lastPopUpDate = ud.object(forKey: "lastPopUpDate")
         {
             print(lastPopUpDate)
-            return true
-
-           
             let dayHourMinuteSecond: Set<Calendar.Component> = [.day, .hour, .minute, .second]
             let difference = NSCalendar.current.dateComponents(dayHourMinuteSecond, from: lastPopUpDate as! Date, to: Date());
             
@@ -37,20 +45,22 @@ class FeedbackSDKReview {
                 return false
                 }
             }
-
-            
             return false
         }else
         {
             let date = Date()
             ud.set(date, forKey: "lastPopUpDate");
+            ud.synchronize()
             return false
         }
     }
     
     /** This method is called from any class with minimum launch count needed. **/
     
-    func showReviewView(){
+    func showReviewView()
+    {
+         if(self.isReviewViewToBeDisplayed())
+         {
           if #available(iOS 9.0, *)
           {
         var resourcesBundle : Bundle? = nil;
@@ -65,17 +75,8 @@ class FeedbackSDKReview {
             viewCOntroller.view.frame = UIApplication.shared.keyWindow!.bounds
             viewCOntroller.view.backgroundColor =  UIColor.clear
             UIApplication.shared.keyWindow?.addSubview(viewCOntroller.view);
-        return;
-        
-        if(self.isReviewViewToBeDisplayed()){
-            if #available(iOS 10.3, *)
-            {
-                SKStoreReviewController.requestReview()
-                
-            } else {
-                // Fallback on earlier versions
-            }
         }
+        return;
     }
     }
 }

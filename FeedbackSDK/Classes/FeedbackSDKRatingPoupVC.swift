@@ -32,12 +32,46 @@ class FeedbackSDKRatingPoupVC: UIViewController {
         noTnksbtn.setTitle(FeedbackSDKManager.sdkInstance.DEFAULT_NO_THANKS, for: .normal)
         
     }
-    @IBAction func yesBtnAction(_ sender: Any) {
+    @IBAction func yesBtnAction(_ sender: Any)
+    {
+        self.hidPopUp()
+        NetworkManager.shared.showAppleReview()
+
     }
-    @IBAction func nextTimeAction(_ sender: Any) {
+    @IBAction func nextTimeAction(_ sender: Any)
+    {
+        let ud:UserDefaults = UserDefaults.standard
+        if let popupCount : Int = ud.integer(forKey: "popupCount")
+        {
+            ud.set(popupCount + 1 , forKey: "popupCount");
+            ud.synchronize()
+        }else
+        {
+            ud.set(1, forKey: "popupCount");
+            ud.synchronize()
+        }
+        self.hidPopUp()
     }
-    @IBAction func noTnksAction(_ sender: Any) {
+    @IBAction func noTnksAction(_ sender: Any)
+    {
+        let ud:UserDefaults = UserDefaults.standard
+        ud.set("1", forKey: "isNoThnks");
+        ud.synchronize()
+        self.hidPopUp()
+        
     }
-    @IBAction func hidePopUpAction(_ sender: Any) {
+    @IBAction func hidePopUpAction(_ sender: Any)
+    {
+        self.hidPopUp()
+    }
+    func hidPopUp()
+    {
+        if (NetworkManager.shared.popupObj != nil)
+        {
+            NetworkManager.shared.popupObj.view.removeFromSuperview();
+            NetworkManager.shared.popupObj = nil
+            ;
+            
+        }
     }
 }

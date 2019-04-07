@@ -43,7 +43,7 @@ public class FeedbackSDKManager
             self.sdk_secret_key = SDK_APP_SECRET_KEY;
             self.uniqId = UIDevice.current.identifierForVendor!.uuidString
 
-         Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(showAfterLunch), userInfo: nil, repeats: false)
+         Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(showAfterLunch), userInfo: nil, repeats: false)
 
             print( self.uniqId);
             
@@ -104,19 +104,38 @@ public class FeedbackSDKManager
             print("Please inizilize app with secret key ")
         }else
         {
-        if #available(iOS 9.0, *) {
+            let alert = UIAlertController(title: "", message: "Are you happy wth app, Do you want to send feedback or rating for app?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Submit", style: .default, handler: { action in
+                switch action.style{
+                case .default:
+                    print("default")
+                    
+                    if #available(iOS 9.0, *) {
+                        
+                        var resourcesBundle : Bundle? = nil;
+                        let containingBundle = Bundle(for: FeedbackSDKViewController.self)
+                        let resourcesBundleURL =  containingBundle.url(forResource: "FeedbackSDKResources", withExtension: "bundle");
+                        if let bb  : URL = resourcesBundleURL
+                        {
+                            resourcesBundle =  Bundle(url: bb)
+                        }
+                        let viewCOntroller  = FeedbackSDKViewController(nibName: "FeedbackSDKViewController", bundle: resourcesBundle)
+                        UIApplication.shared.keyWindow?.rootViewController?.present(viewCOntroller, animated: true, completion: nil)
+                        
+                    }
+                    
+                case .cancel:
+                    print("cancel")
+                    
+                case .destructive:
+                    print("destructive")
+                    
+                    
+                }}))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+              }))
+            UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: nil)
             
-            var resourcesBundle : Bundle? = nil;
-            let containingBundle = Bundle(for: FeedbackSDKViewController.self)
-            let resourcesBundleURL =  containingBundle.url(forResource: "FeedbackSDKResources", withExtension: "bundle");
-            if let bb  : URL = resourcesBundleURL
-            {
-                resourcesBundle =  Bundle(url: bb)
-            }
-            let viewCOntroller  = FeedbackSDKViewController(nibName: "FeedbackSDKViewController", bundle: resourcesBundle)
-            UIApplication.shared.keyWindow?.rootViewController?.present(viewCOntroller, animated: true, completion: nil)
-            
-        }
         }
     }
     public func addRatingPopUInformation(DEFAULT_TITLE:String,DEFAULT_RATE_TEXT:String,DEFAULT_YES_RATE:String,DEFAULT_MAY_BE_LATER:String,DEFAULT_NO_THANKS:String,DEFAULT_DAYS_BEFORE_PROMPT:Int,DEFAULT_LAUNCH_BEFORE_PROMPT:Int)
