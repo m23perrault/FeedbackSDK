@@ -32,8 +32,9 @@ class FeedbackSDKViewController: UIViewController
     }
     func addInformationOverView()
     {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(_:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(_:)), name: UIApplication.keyboardWillChangeFrameNotification, object: nil)
+       
+
         self.addTextView()
         self.tbView.dataSource = self;
         self.tbView.delegate = self;
@@ -201,7 +202,7 @@ class FeedbackSDKViewController: UIViewController
         self.textView.resignFirstResponder()
         self.view.addSubview(self.loadingView)
         self.loadingActivity.startAnimating()
-        self.loadingView.bringSubview(toFront: self.view)
+        self.loadingView.bringSubviewToFront(self.view)
     }
     func hideLoading()
     {
@@ -217,7 +218,7 @@ class FeedbackSDKViewController: UIViewController
     @objc private func keyboardWillChangeFrame(_ notification: Notification)
     {
         if let userInfo = notification.userInfo {
-            if let endFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+            if let endFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
             {
                 var keyboardHeight = UIScreen.main.bounds.height - endFrame.origin.y
                 if #available(iOS 11, *) {
