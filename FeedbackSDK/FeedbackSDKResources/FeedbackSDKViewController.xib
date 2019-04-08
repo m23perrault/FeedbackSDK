@@ -12,6 +12,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FeedbackSDKViewController" customModule="FeedbackSDKResources" customModuleProvider="target">
             <connections>
                 <outlet property="closeBt" destination="2xz-ee-CcX" id="Vbc-Gt-OCQ"/>
+                <outlet property="loadingActivity" destination="Urb-uA-mP0" id="z2Z-Uv-vUt"/>
+                <outlet property="loadingView" destination="AMW-tz-t13" id="mMb-Sy-LkC"/>
                 <outlet property="sendBtn" destination="ff8-Dl-lds" id="HSq-PI-KkI"/>
                 <outlet property="tbView" destination="tdp-Bh-DhA" id="1OZ-Mh-cyy"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="HNR-xL-A1M"/>
@@ -88,6 +90,18 @@
             </connections>
             <point key="canvasLocation" x="-442" y="-79"/>
         </button>
+        <view contentMode="scaleToFill" id="AMW-tz-t13">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Urb-uA-mP0">
+                    <rect key="frame" x="169" y="315" width="37" height="37"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </activityIndicatorView>
+            </subviews>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+            <point key="canvasLocation" x="802" y="99"/>
+        </view>
     </objects>
     <resources>
         <image name="send_button" width="16" height="16"/>

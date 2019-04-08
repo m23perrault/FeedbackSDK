@@ -59,7 +59,7 @@ public class FeedbackSDKManager
             network.callServerWithRequest(urlString: StringContent.APP_DETAILS_API, type: "PUT", param: param, completion: { (json:[String:Any], err:Error?) in
                 if err != nil
                 {
-                    print("Some error came - ",err!)
+                    //print("Some error came - ",err!)
                     return completionHandler(false,   NSError.init(domain: "com.feedBackSDK", code: 123, userInfo: ["info":err?.localizedDescription ?? ""]))
 
                 }
@@ -108,7 +108,6 @@ public class FeedbackSDKManager
             alert.addAction(UIAlertAction(title: "Submit", style: .default, handler: { action in
                 switch action.style{
                 case .default:
-                    print("default")
                     
                     if #available(iOS 9.0, *) {
                         

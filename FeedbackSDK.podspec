@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = 'FeedbackSDK'
-  s.version          = '0.1.4'
-  s.summary          = 'A short description of FeedbackSDK.'
+  s.version          = '1.0.0'
+  s.summary          = 'FeedbackSDK is sdk which allow to user send feedback and rating popup'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -34,8 +34,7 @@ TODO: Add long description of the pod here.
    s.public_header_files = 'FeedbackSDK/Classes/*.h',
    s.frameworks = "AVFoundation","Foundation","UIKit","StoreKit"
    s.dependency 'AlamofireImage', '~> 3.5'
-s.dependency 'GrowingTextView', '0.6.1'
-s.dependency 'JGProgressHUD'
+   s.dependency 'GrowingTextView', '0.6.1'
    s.ios.resource_bundle = {
     'FeedbackSDKResources' => ['FeedbackSDK/FeedbackSDKResources/*']
   }

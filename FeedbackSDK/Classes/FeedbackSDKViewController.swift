@@ -7,11 +7,12 @@
 
 import UIKit
 import GrowingTextView
-import JGProgressHUD
-
 @available(iOS 9.0, *)
 class FeedbackSDKViewController: UIViewController
 {
+    @IBOutlet var loadingView: UIView!
+    @IBOutlet weak var loadingActivity: UIActivityIndicatorView!
+    
     var dataArray  =  NSArray()
     @IBOutlet weak var tbView: UITableView!
     private var textView: GrowingTextView!
@@ -121,12 +122,10 @@ class FeedbackSDKViewController: UIViewController
     }
     func textViewDidBeginEditing(_ textView: UITextView)
     {
-        print("print1")
         self.tbView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 320, right: 0)
         self.scrollToBottom()
     }
     func textViewDidEndEditing(_ textView: UITextView) {
-        print("print2")
         self.tbView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 80, right: 0)
     }
     func scrollToBottom(){
@@ -167,17 +166,13 @@ class FeedbackSDKViewController: UIViewController
             let param:[String:String] = ["app_id":FeedbackSDKManager.sdkInstance.sdk_app_id,"secret_key":FeedbackSDKManager.sdkInstance.sdk_secret_key,"device_id": FeedbackSDKManager.sdkInstance.uniqId,"device_type":"ios","sendMessage":"1","reply_message":self.textView.text];
             
                 let network = NetworkManager.shared
-            
-            let hud = JGProgressHUD(style: .dark)
-            hud.textLabel.text = StringContent.loadingMessage
-            hud.isUserInteractionEnabled =  false;
-            hud.show(in: self.view)
-            
+                self.showLoading()
                 network.callServerWithRequest(urlString: StringContent.REPLY_API, type: "POST", param: param, completion: { (json:[String:Any], err:Error?) in
                     if err != nil
                     {
                     }
                     DispatchQueue.main.async {
+                        self.hideLoading()
                         if let status:NSInteger = json["status"] as? NSInteger
                         {
                             if status == 200
@@ -196,11 +191,22 @@ class FeedbackSDKViewController: UIViewController
                             }
                         }
                     }
-                    hud.dismiss()
                 }
             )
         }
         
+    }
+    func showLoading()
+    {
+        self.textView.resignFirstResponder()
+        self.view.addSubview(self.loadingView)
+        self.loadingActivity.startAnimating()
+        self.loadingView.bringSubview(toFront: self.view)
+    }
+    func hideLoading()
+    {
+        self.loadingView.removeFromSuperview()
+        self.loadingActivity.stopAnimating()
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.textView.resignFirstResponder()
@@ -230,10 +236,7 @@ class FeedbackSDKViewController: UIViewController
         let param:[String:String] = ["app_id":FeedbackSDKManager.sdkInstance.sdk_app_id,"secret_key":FeedbackSDKManager.sdkInstance.sdk_secret_key,"device_id": FeedbackSDKManager.sdkInstance.uniqId,"device_type":"ios","sendMessage":"0","reply_message":""];
         
         let network = NetworkManager.shared
-        let hud = JGProgressHUD(style: .dark)
-        hud.textLabel.text = StringContent.loadingMessage
-        hud.isUserInteractionEnabled =  false;
-        hud.show(in: self.view)
+        self.showLoading()
         network.callServerWithRequest(urlString: StringContent.REPLY_API, type: "POST", param: param, completion: { (json:[String:Any], err:Error?) in
             if err != nil
             {
@@ -256,8 +259,9 @@ class FeedbackSDKViewController: UIViewController
                     {
                     }
                 }
+                self.hideLoading()
             }
-            hud.dismiss()
+        
         })
         
        
