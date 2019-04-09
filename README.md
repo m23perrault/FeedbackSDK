@@ -1,4 +1,4 @@
-## FeedbackSDK  (v 1.0.2)
+## FeedbackSDK  (v 1.1.0)
 
 ## Requirements
 platform: iOS 9 or greater
@@ -17,7 +17,7 @@ pod 'FeedbackSDK', :git => 'https://github.com/m23perrault/FeedbackSDK.git'
 ## For Specific tag implimenation-
 
 ```
-pod 'FeedbackSDK', :git => 'https://github.com/m23perrault/FeedbackSDK.git',:tag => '1.0.2'
+pod 'FeedbackSDK', :git => 'https://github.com/m23perrault/FeedbackSDK.git',:tag => '1.1.0'
 
 ```
 

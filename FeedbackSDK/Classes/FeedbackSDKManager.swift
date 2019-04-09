@@ -64,9 +64,6 @@ public class FeedbackSDKManager
             {
          Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(showAfterLunch), userInfo: nil, repeats: false)
             }
-
-            print( self.uniqId);
-            
             // Do any additional setup after loading the view, typically from a nib.
             /** call 'showReviewView' method with desired launch counts needed. **/
           
@@ -84,8 +81,6 @@ public class FeedbackSDKManager
 
                 }
                 DispatchQueue.main.async {
-                    print(json);
-                    
                     if let status:NSInteger = json["status"] as? NSInteger
                     {
                         if status == 200 ||  status == 409
@@ -98,10 +93,6 @@ public class FeedbackSDKManager
                     }
                 }
             })
-            
-            print(SDK_APP_ID);
-            print(SDK_APP_SECRET_KEY);
-          
         }
         
     }
@@ -150,6 +141,10 @@ public class FeedbackSDKManager
     }
     @objc func showAlert()
     {
+        let ud:UserDefaults = UserDefaults.standard
+
+        if ud.object(forKey: "isNoThnks") == nil
+        {
         let alert = UIAlertController(title: "Error!", message: "Are you happy with app, Do you want to send feedback or rating for app?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Submit", style: .default, handler: { action in
             if #available(iOS 10.3, *)
@@ -163,7 +158,6 @@ public class FeedbackSDKManager
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
             if #available(iOS 10.3, *)
             {
-                let ud:UserDefaults = UserDefaults.standard
                 ud.set("1", forKey: "isNoThnks");
                 ud.synchronize()
                 
@@ -175,5 +169,5 @@ public class FeedbackSDKManager
         }))
          UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: nil)
        }
-        
+    }
 }

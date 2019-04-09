@@ -254,9 +254,7 @@ class FeedbackSDKViewController: UIViewController
                     {
                         if let  data : NSArray =  json["data"] as? NSArray
                         {
-                            print(data);
                             self.dataArray =  data.reversed() as NSArray
-                            
                             self.tbView.reloadData()
                             self.scrollToBottom()
                             self.textView.text =  ""
@@ -299,7 +297,7 @@ extension FeedbackSDKViewController : UITableViewDataSource,UITableViewDelegate
         if let post_description : String = msgInfo["message"] as! String
         {
         height = heightForView(text: post_description, font: UIFont.systemFont(ofSize: 15) , width: self.view.frame.size.width - 50)
-            height = height + 50;
+            height = height + 53;
         }
         return height;
     }
@@ -346,7 +344,7 @@ extension FeedbackSDKViewController : UITableViewDataSource,UITableViewDelegate
             }
              labelTitle.frame =  CGRect(x: 5, y: 10, width: mainView.frame.size.width - 10, height: height);
              labelDesp.frame = CGRect(x: 5, y: mainView.frame.size.height - 20 , width: mainView.frame.size.width - 10, height: 15);
-            if sender_user == FeedbackSDKManager.sdkInstance.uniqId
+            if sender_user != FeedbackSDKManager.sdkInstance.uniqId
             {
                 labelDesp.textAlignment = .left;
                 labelTitle.textColor = UIColor.black
@@ -402,7 +400,7 @@ extension FeedbackSDKViewController : UITableViewDataSource,UITableViewDelegate
 
             cell.contentView.addSubview(mainView);
             
-            if sender_user == FeedbackSDKManager.sdkInstance.uniqId
+            if sender_user != FeedbackSDKManager.sdkInstance.uniqId
             {
                 labelDesp.textAlignment = .left;
                 labelTitle.textColor = UIColor.black

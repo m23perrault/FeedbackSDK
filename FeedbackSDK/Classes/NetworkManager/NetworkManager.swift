@@ -31,7 +31,7 @@ public class NetworkManager
     
             Alamofire.request(urlStr, method: .post, parameters: param, encoding: URLEncoding.default, headers: nil).responseJSON { (response:DataResponse) in
                 if let data = response.data {
-                    print(String(data: data, encoding: String.Encoding.utf8)!)
+                   // print(String(data: data, encoding: String.Encoding.utf8)!)
                 }
                 switch response.result
                 {
@@ -51,12 +51,11 @@ public class NetworkManager
             
             Alamofire.request(urlStr, method: .put, parameters: param, encoding: URLEncoding.httpBody, headers: header).responseJSON { (response:DataResponse) in
                 if let data = response.data {
-                    print(String(data: data, encoding: String.Encoding.utf8)!)
+                    //print(String(data: data, encoding: String.Encoding.utf8)!)
                 }
                 switch response.result
                 {
                 case .success(let jsonFetched):
-                    //    print(jsonFetched)
                     completion(jsonFetched as! [String:Any], nil)
                     break
                 case .failure(let err):
