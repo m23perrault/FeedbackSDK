@@ -34,6 +34,9 @@ class FeedbackSDKRatingPoupVC: UIViewController {
     }
     @IBAction func yesBtnAction(_ sender: Any)
     {
+        let ud:UserDefaults = UserDefaults.standard
+        ud.set("1", forKey: "isNoThnks");
+        ud.synchronize()
         self.hidPopUp()
         NetworkManager.shared.showAppleReview()
 

@@ -1,4 +1,4 @@
-## FeedbackSDK  (v 1.0.1)
+## FeedbackSDK  (v 1.0.2)
 
 ## Requirements
 platform: iOS 9 or greater
@@ -17,7 +17,7 @@ pod 'FeedbackSDK', :git => 'https://github.com/m23perrault/FeedbackSDK.git'
 ## For Specific tag implimenation-
 
 ```
-pod 'FeedbackSDK', :git => 'https://github.com/m23perrault/FeedbackSDK.git',:tag => '1.0.1'
+pod 'FeedbackSDK', :git => 'https://github.com/m23perrault/FeedbackSDK.git',:tag => '1.0.2'
 
 ```
 
@@ -69,9 +69,6 @@ DEFAULT_NO_THANKS|String|Default text for no thanks action to show over popup.(o
 DEFAULT_DAYS_BEFORE_PROMPT|Int|Default value in days to show popup to user.(optional)|3
 DEFAULT_LAUNCH_BEFORE_PROMPT|Int|Default value in number to max show popup to user.(optional)|7
 
-## Author
-
-aravindkumar, anshapp89@gmail.com
 
 ## License
 

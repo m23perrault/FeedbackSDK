@@ -57,10 +57,16 @@ class FeedbackSDKReview {
     
     /** This method is called from any class with minimum launch count needed. **/
     
-    func showReviewView()
+    func showReviewView(isShow:Bool)
     {
-         if(self.isReviewViewToBeDisplayed())
+         if(self.isReviewViewToBeDisplayed() || isShow)
          {
+            if(isShow)
+            {
+                let ud:UserDefaults = UserDefaults.standard
+                ud.set(1, forKey: "popupCount");
+                ud.synchronize()
+            }
           if #available(iOS 9.0, *)
           {
         var resourcesBundle : Bundle? = nil;

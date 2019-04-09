@@ -72,7 +72,7 @@ class FeedbackSDKViewController: UIViewController
         textView.maxLength = 250
         textView.maxHeight = 100
         textView.trimWhiteSpaceWhenEndEditing = true
-        textView.placeholder = "Say something..."
+        textView.placeholder = "Enter your feedback here..."
         textView.backgroundColor = UIColor(white: 0.90, alpha: 1.0)
         textView.placeholderColor = UIColor.gray
         textView.font = UIFont.systemFont(ofSize: 15)
@@ -83,7 +83,6 @@ class FeedbackSDKViewController: UIViewController
         
         self.sendBtn.translatesAutoresizingMaskIntoConstraints = true;
         
-        self.sendBtn.frame =  CGRect.init(x: self.view.frame.size.width - 49 , y: 0, width: 49, height: 49);
         
         sendBtn.backgroundColor = UIColor.clear
         
@@ -120,6 +119,8 @@ class FeedbackSDKViewController: UIViewController
                 // Fallback on earlier versions
             }
         }
+        self.sendBtn.frame =  CGRect.init(x: UIApplication.shared.keyWindow!.frame.size.width - 49 , y: 0, width: 49, height: 49);
+
     }
     func textViewDidBeginEditing(_ textView: UITextView)
     {
@@ -199,6 +200,10 @@ class FeedbackSDKViewController: UIViewController
     }
     func showLoading()
     {
+        self.loadingView.frame = UIApplication.shared.keyWindow!.bounds
+        
+         self.loadingActivity.frame =  CGRect.init(x: UIApplication.shared.keyWindow!.frame.width/2 -  self.loadingActivity.frame.size.width/2, y: UIApplication.shared.keyWindow!.frame.height/2 -  self.loadingActivity.frame.size.height/2, width: self.loadingActivity.frame.size.width, height: self.loadingActivity.frame.size.height)
+        
         self.textView.resignFirstResponder()
         self.view.addSubview(self.loadingView)
         self.loadingActivity.startAnimating()
@@ -234,7 +239,7 @@ class FeedbackSDKViewController: UIViewController
     func getAllMesseage()  {
         //Service impliment with network manager
         
-        let param:[String:String] = ["app_id":FeedbackSDKManager.sdkInstance.sdk_app_id,"secret_key":FeedbackSDKManager.sdkInstance.sdk_secret_key,"device_id": FeedbackSDKManager.sdkInstance.uniqId,"device_type":"ios","sendMessage":"0","reply_message":""];
+        let param:[String:String] = ["app_id":FeedbackSDKManager.sdkInstance.sdk_app_id,"secret_key":FeedbackSDKManager.sdkInstance.sdk_secret_key,"device_id": FeedbackSDKManager.sdkInstance.uniqId,"device_type":"ios","sendMessage":"0"];
         
         let network = NetworkManager.shared
         self.showLoading()
@@ -315,6 +320,8 @@ extension FeedbackSDKViewController : UITableViewDataSource,UITableViewDelegate
         let msg : String = msgInfo["message"] as! String;
         let created_on : String = msgInfo["created_on"] as! String;
 
+        let sender_user : String = msgInfo["sender_user"] as! String;
+
        let cell : InfoTableViewCell = tableView.dequeueReusableCell(withIdentifier: "info", for: indexPath) as! InfoTableViewCell
         cell.selectionStyle = .none;
         
@@ -322,36 +329,68 @@ extension FeedbackSDKViewController : UITableViewDataSource,UITableViewDelegate
         {
             let labelTitle  : UILabel = mainView.viewWithTag(1) as! UILabel;
             let labelDesp  : UILabel = mainView.viewWithTag(2) as! UILabel;
+            
             labelDesp.text = created_on
             labelTitle.text = msg
             var height : CGFloat = 20.0;
             height = heightForView(text: msg, font: UIFont.systemFont(ofSize: 15) , width: self.view.frame.size.width - 50) + 5.0
-            
+            if sender_user != FeedbackSDKManager.sdkInstance.uniqId
+            {
+                mainView.frame =  CGRect(x: 10, y: 5, width: cell.contentView.frame.size.width - 50, height: height + 40)
+                mainView.backgroundColor =  UIColor.init(red: 241.0/255.0, green: 241.0/255.0, blue: 241.0/255.0, alpha: 1.0)
+
+            }else
+            {
              mainView.frame =  CGRect(x: 40, y: 5, width: cell.contentView.frame.size.width - 50, height: height + 40)
+                mainView.backgroundColor =  UIColor.init(red: 205.0/255.0, green: 151.0/255.0, blue: 222.0/255.0, alpha: 1.0)
+            }
              labelTitle.frame =  CGRect(x: 5, y: 10, width: mainView.frame.size.width - 10, height: height);
              labelDesp.frame = CGRect(x: 5, y: mainView.frame.size.height - 20 , width: mainView.frame.size.width - 10, height: 15);
+            if sender_user == FeedbackSDKManager.sdkInstance.uniqId
+            {
+                labelDesp.textAlignment = .left;
+                labelTitle.textColor = UIColor.black
+                labelDesp.textColor = UIColor.black
+                
+            }else
+            {
+                labelDesp.textAlignment = .right;
+                labelTitle.textColor = UIColor.white
+                labelDesp.textColor = UIColor.white
+            }
             
         }else
         {
             var height : CGFloat = 20.0;
             height = heightForView(text: msg, font: UIFont.systemFont(ofSize: 15) , width: self.view.frame.size.width - 50) + 5.0
+            var mainView : UIView  = UIView()
+            
+            if sender_user != FeedbackSDKManager.sdkInstance.uniqId
+            {
+                mainView = UIView(frame: CGRect(x: 10, y: 5, width: cell.contentView.frame.size.width - 50, height: height + 40 ))
+                mainView.backgroundColor =  UIColor.init(red: 241.0/255.0, green: 241.0/255.0, blue: 241.0/255.0, alpha: 1.0)
 
-            let mainView : UIView = UIView(frame: CGRect(x: 40, y: 5, width: cell.contentView.frame.size.width - 50, height: height + 40 ))
-            mainView.backgroundColor =  UIColor.init(red: 205.0/255.0, green: 151.0/255.0, blue: 222.0/255.0, alpha: 1.0)
+            }else
+            {
+            mainView = UIView(frame: CGRect(x: 40, y: 5, width: cell.contentView.frame.size.width - 50, height: height + 40 ))
+                mainView.backgroundColor =  UIColor.init(red: 205.0/255.0, green: 151.0/255.0, blue: 222.0/255.0, alpha: 1.0)
+
+            }
+            let labelTitle : UILabel = UILabel(frame: CGRect(x: 5, y: 10, width: mainView.frame.size.width - 10, height: height));
+            let labelDesp : UILabel = UILabel(frame: CGRect(x: 5, y: mainView.frame.size.height - 20 , width: mainView.frame.size.width - 10, height: 15));
+
             mainView.clipsToBounds = true;
             mainView.layer.cornerRadius  = 5.0;
             mainView.tag = 11;
-            let labelTitle : UILabel = UILabel(frame: CGRect(x: 5, y: 10, width: mainView.frame.size.width - 10, height: height));
             labelTitle.tag =  1;
             labelTitle.font =  UIFont.systemFont(ofSize: 15);
             labelTitle.textAlignment = .left;
             labelTitle.numberOfLines = 1000000;
             
-            let labelDesp : UILabel = UILabel(frame: CGRect(x: 5, y: mainView.frame.size.height - 20 , width: mainView.frame.size.width - 10, height: 15));
             labelDesp.tag =  2;
             labelDesp.font =  UIFont.systemFont(ofSize: 10);
-            labelDesp.textAlignment = .right;
             mainView.addSubview(labelDesp);
+            
             mainView.addSubview(labelTitle);
             
             labelDesp.text = created_on
@@ -359,10 +398,23 @@ extension FeedbackSDKViewController : UITableViewDataSource,UITableViewDelegate
             labelTitle.backgroundColor =  UIColor.clear;
             labelTitle.backgroundColor =  UIColor.clear;
 
-            labelTitle.textColor = UIColor.white
-            labelDesp.textColor = UIColor.white
+           
 
             cell.contentView.addSubview(mainView);
+            
+            if sender_user == FeedbackSDKManager.sdkInstance.uniqId
+            {
+                labelDesp.textAlignment = .left;
+                labelTitle.textColor = UIColor.black
+                labelDesp.textColor = UIColor.black
+                
+            }else
+            {
+                labelDesp.textAlignment = .right;
+                labelTitle.textColor = UIColor.white
+                labelDesp.textColor = UIColor.white
+            }
+            
         }
         //let cell : FeedbackMeTableViewCell = (tableView.dequeueReusableCell(withIdentifier: "FeedbackMeTableViewCell") ?? nil)! as! FeedbackMeTableViewCell
         return cell
